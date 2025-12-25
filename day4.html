@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cofre 4 — Dia 4</title>
+    <style>
+        :root {
+            --bg: #0a0e13;
+            --card: #121824;
+            --text: #e7ecf4;
+            --muted: #aab3c2;
+            --line: rgba(255, 255, 255, .12);
+            --accent: #7aa2ff;
+            --shadow: 0 20px 60px rgba(0, 0, 0, .65);
+            --radius: 20px;
+            --christmas-red: rgba(220, 53, 69, .25);
+            --christmas-green: rgba(40, 167, 69, .15);
+            --christmas-gold: rgba(255, 193, 7, .2);
+            --christmas-blue: rgba(23, 162, 184, .12);
+            /* Cores natalinas para formulários */
+            --xmas-red: #dc3545;
+            --xmas-green: #28a745;
+            --xmas-gold: #ffc107;
+            --xmas-red-light: rgba(220, 53, 69, .25);
+            --xmas-green-light: rgba(40, 167, 69, .2);
+            --xmas-gold-light: rgba(255, 193, 7, .25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            position: relative;
+            overflow-x: hidden;
+            background:
+                /* Base escura com profundidade */
+                linear-gradient(135deg, #0a0e13 0%, #0f1419 50%, #0a0e13 100%),
+                /* Luzes de Natal grandes e suaves */
+                radial-gradient(ellipse 1200px 800px at 15% 15%, var(--christmas-red), transparent 60%),
+                radial-gradient(ellipse 1000px 700px at 85% 20%, var(--christmas-green), transparent 60%),
+                radial-gradient(ellipse 900px 600px at 50% 85%, var(--christmas-gold), transparent 65%),
+                radial-gradient(ellipse 800px 500px at 25% 70%, var(--christmas-blue), transparent 60%),
+                /* Luzes pequenas brilhantes (estrelas/luzes de Natal) */
+                radial-gradient(2px 2px at 12% 18%, rgba(255, 255, 255, .8), transparent 50%),
+                radial-gradient(3px 3px at 28% 12%, rgba(255, 193, 7, .9), transparent 50%),
+                radial-gradient(2px 2px at 45% 8%, rgba(255, 255, 255, .7), transparent 50%),
+                radial-gradient(3px 3px at 62% 15%, rgba(220, 53, 69, .8), transparent 50%),
+                radial-gradient(2px 2px at 78% 10%, rgba(255, 255, 255, .75), transparent 50%),
+                radial-gradient(3px 3px at 88% 22%, rgba(40, 167, 69, .85), transparent 50%),
+                radial-gradient(2px 2px at 18% 65%, rgba(255, 193, 7, .7), transparent 50%),
+                radial-gradient(3px 3px at 35% 75%, rgba(255, 255, 255, .8), transparent 50%),
+                radial-gradient(2px 2px at 55% 82%, rgba(23, 162, 184, .75), transparent 50%),
+                radial-gradient(3px 3px at 72% 78%, rgba(255, 255, 255, .7), transparent 50%),
+                radial-gradient(2px 2px at 85% 88%, rgba(220, 53, 69, .8), transparent 50%),
+                /* Efeito de brilho suave */
+                radial-gradient(ellipse 2000px 1500px at 50% 50%, rgba(255, 255, 255, .02), transparent 70%);
+            background-attachment: fixed;
+            color: var(--text);
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, "Apple Color Emoji", "Segoe UI Emoji";
+            padding: 24px;
+            animation: backgroundPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% {
+                filter: brightness(1) contrast(1);
+            }
+            50% {
+                filter: brightness(1.05) contrast(1.02);
+            }
+        }
+
+        /* Efeito de neve */
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: rgba(255, 255, 255, 1);
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3);
+            animation: snowfall linear infinite;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-10px) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.9;
+            }
+            95% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) translateX(var(--drift)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .wrap {
+            width: min(760px, 100%);
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            background: linear-gradient(180deg, 
+                rgba(18, 24, 36, .96) 0%, 
+                rgba(18, 24, 36, .94) 50%, 
+                rgba(18, 24, 36, .92) 100%);
+            border: 1px solid var(--line);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, .65),
+                0 0 0 1px rgba(255, 255, 255, .05),
+                inset 0 1px 0 rgba(255, 255, 255, .1);
+            border-radius: var(--radius);
+            padding: 36px 32px;
+            backdrop-filter: blur(20px) saturate(180%);
+            position: relative;
+            animation: containerGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes containerGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, .65),
+                    0 0 0 1px rgba(255, 255, 255, .05),
+                    inset 0 1px 0 rgba(255, 255, 255, .1),
+                    0 0 40px rgba(122, 162, 255, .1);
+            }
+            50% {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, .7),
+                    0 0 0 1px rgba(255, 255, 255, .08),
+                    inset 0 1px 0 rgba(255, 255, 255, .15),
+                    0 0 60px rgba(122, 162, 255, .15);
+            }
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 18px;
+            letter-spacing: .3px;
+            font-weight: 650;
+            color: var(--text);
+            text-shadow: 
+                0 0 20px rgba(122, 162, 255, .15),
+                0 2px 4px rgba(0, 0, 0, .3);
+            position: relative;
+        }
+
+        .text-flow {
+            color: rgba(231, 236, 244, .92);
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        .text-flow p {
+            margin-bottom: 16px;
+        }
+
+        .text-flow p:last-child {
+            margin-bottom: 0;
+        }
+
+        .image-section {
+            margin: 32px 0;
+            text-align: center;
+        }
+
+        .image-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .4);
+            opacity: 0.9;
+        }
+
+        .image-caption {
+            margin-top: 12px;
+            font-size: 13.5px;
+            color: var(--muted);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .spotify-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+        }
+
+        .spotify-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 2px solid var(--xmas-gold);
+            background: linear-gradient(135deg, 
+                var(--xmas-gold-light) 0%, 
+                rgba(255, 193, 7, .2) 100%);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+            box-shadow: 
+                0 4px 15px rgba(255, 193, 7, .25),
+                inset 0 1px 0 rgba(255, 255, 255, .2);
+        }
+
+        .spotify-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, .3), 
+                transparent);
+            transition: left 0.5s;
+        }
+
+        .spotify-link:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 193, 7, .8);
+            background: linear-gradient(135deg, 
+                rgba(255, 193, 7, .3) 0%, 
+                rgba(255, 193, 7, .25) 100%);
+            box-shadow: 
+                0 8px 25px rgba(255, 193, 7, .35),
+                0 0 0 4px rgba(255, 193, 7, .15),
+                inset 0 1px 0 rgba(255, 255, 255, .3);
+        }
+
+        .spotify-link:hover::before {
+            left: 100%;
+        }
+
+        .spotify-hint {
+            font-size: 12px;
+            color: rgba(231, 236, 244, .55);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .optional-lock {
+            margin-top: 32px;
+            padding: 20px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+        }
+
+        .optional-lock-label {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .lock-input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .password-input {
+            flex: 1 1 200px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 12px 14px;
+            outline: none;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .password-input:focus {
+            border-color: rgba(122, 162, 255, .55);
+            box-shadow: 0 0 0 4px rgba(122, 162, 255, .12);
+        }
+
+        .password-input:disabled {
+            background: rgba(255, 255, 255, .02);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn {
+            flex: 0 0 auto;
+            background: rgba(122, 162, 255, .14);
+            border: 1px solid rgba(122, 162, 255, .35);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: .15s ease;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            background: rgba(122, 162, 255, .18);
+        }
+
+        .btn:disabled {
+            background: rgba(255, 255, 255, .05);
+            border-color: var(--line);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .error-message {
+            display: block;
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 90, 90, .35);
+            background: rgba(255, 90, 90, .10);
+            color: rgba(255, 215, 215, .95);
+            font-size: 13px;
+            min-height: 20px;
+        }
+
+        .error-message:empty {
+            display: none;
+        }
+
+        .unlock-content {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+            animation: fadeIn 0.5s;
+        }
+
+        .unlock-content.active {
+            display: block;
+        }
+
+        /* Estilos do formulário de mensagem */
+        .message-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--line);
+        }
+
+        .message-section-title {
+            font-size: 15px;
+            color: rgba(231, 236, 244, .92);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .message-section-subtitle {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 20px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .message-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, .06) 0%, 
+                rgba(255, 255, 255, .04) 100%);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 14px 16px;
+            outline: none;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-textarea {
+            min-height: 140px;
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: var(--xmas-green);
+            background: linear-gradient(135deg, 
+                rgba(40, 167, 69, .12) 0%, 
+                rgba(255, 255, 255, .06) 100%);
+            box-shadow: 
+                0 0 0 4px rgba(40, 167, 69, .2),
+                0 4px 12px rgba(40, 167, 69, .15),
+                inset 0 1px 0 rgba(255, 255, 255, .1);
+            transform: translateY(-1px);
+        }
+
+        .form-submit-btn {
+            align-self: flex-start;
+            background: linear-gradient(135deg, 
+                var(--xmas-red-light) 0%, 
+                rgba(220, 53, 69, .3) 50%,
+                var(--xmas-red-light) 100%);
+            border: 2px solid var(--xmas-red);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 14px 28px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+            box-shadow: 
+                0 4px 15px rgba(220, 53, 69, .3),
+                inset 0 1px 0 rgba(255, 255, 255, .2);
+        }
+
+        .form-submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, .25), 
+                transparent);
+            transition: left 0.5s;
+        }
+
+        .form-submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, 
+                rgba(220, 53, 69, .4) 0%, 
+                rgba(220, 53, 69, .35) 50%,
+                rgba(220, 53, 69, .4) 100%);
+            border-color: rgba(220, 53, 69, .8);
+            box-shadow: 
+                0 8px 25px rgba(220, 53, 69, .4),
+                0 0 0 4px rgba(220, 53, 69, .15),
+                inset 0 1px 0 rgba(255, 255, 255, .3);
+        }
+
+        .form-submit-btn:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        .form-submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .form-success-message {
+            display: none;
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 200, 100, .35);
+            background: rgba(100, 200, 100, .10);
+            color: rgba(200, 255, 200, .95);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .form-success-message.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .form-error-message {
+            display: none;
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 90, 90, .35);
+            background: rgba(255, 90, 90, .10);
+            color: rgba(255, 215, 215, .95);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .form-error-message.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsividade para mobile - iPhone 14 e similares */
+        @media (max-width: 430px) {
+            body {
+                padding: 10px 8px;
+            }
+
+            .container {
+                padding: 18px 14px;
+                border-radius: 16px;
+            }
+
+            .top {
+                margin-bottom: 14px;
+                padding-bottom: 10px;
+            }
+
+            h1 {
+                font-size: 15px;
+            }
+
+            /* Texto inicial mais compacto - foco no formulário */
+            .text-flow:first-of-type {
+                font-size: 13.5px;
+                line-height: 1.55;
+            }
+
+            .text-flow:first-of-type p {
+                margin-bottom: 10px;
+            }
+
+            .text-flow:first-of-type p[style*="margin-top"] {
+                margin-top: 16px !important;
+            }
+
+            /* Reduzir espaçamento antes do formulário para focar nele */
+            .message-section {
+                margin-top: 18px;
+                padding-top: 14px;
+            }
+
+            .message-section-title {
+                font-size: 15px;
+                margin-bottom: 6px;
+                font-weight: 600;
+            }
+
+            .message-section-subtitle {
+                font-size: 12px;
+                margin-bottom: 14px;
+                line-height: 1.5;
+            }
+
+            .form-label {
+                font-size: 12.5px;
+            }
+
+            .form-textarea {
+                min-height: 130px;
+                padding: 12px 14px;
+                font-size: 15px;
+            }
+
+            .form-submit-btn {
+                width: 100%;
+                padding: 15px 20px;
+                font-size: 15px;
+                margin-top: 4px;
+            }
+
+            .spotify-section {
+                margin-top: 18px;
+                padding-top: 14px;
+            }
+
+            .spotify-link {
+                width: 100%;
+                padding: 13px 18px;
+                font-size: 14px;
+            }
+
+            /* Reduzir texto após formulário */
+            .text-flow:last-of-type {
+                margin-top: 18px;
+            }
+
+            .text-flow:last-of-type p {
+                margin-bottom: 8px;
+                font-size: 13px;
+            }
+
+            .text-flow:last-of-type p[style*="margin-top"] {
+                margin-top: 14px !important;
+            }
+        }
+
+        @media (max-width: 640px) and (min-width: 431px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .container {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            .text-flow {
+                font-size: 14.5px;
+            }
+
+            .text-flow p {
+                margin-bottom: 14px;
+            }
+
+            .message-section {
+                margin-top: 24px;
+                padding-top: 20px;
+            }
+
+            h1 {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Container para efeito de neve -->
+    <div class="snow-container" id="snowContainer"></div>
+    
+    <div class="wrap">
+        <div class="container">
+            <div class="top">
+                <h1>Cofre 4 — Feliz Natal</h1>
+            </div>
+
+            <div class="text-flow">
+                <p>Feliz Natal, meu bem.</p>
+
+                <p>Hoje é um dia especial e eu queria compartilhar algo que tem passado pela minha cabeça.</p>
+
+                <p>Talvez você pense diferente, mas deixa eu te contar como eu vejo as coisas.</p>
+
+                <p>Eu não acho que Deus une pessoas — pode soar estranho — eu acho que Deus abençoa as uniões. A escolha sempre está nas nossas mãos, e aí entra o livre-arbítrio.</p>
+
+                <p>Tem uma frase do Leonardo Gonçalves que diz: "ter fé não é apenas crer que Deus existe, mas aceitar que Ele acredita em nós".</p>
+
+                <p>Quando penso nisso, entendo que Deus acredita que somos capazes de fazer boas escolhas, mesmo com o coração enganoso, mesmo cheios de defeitos. Somos criaturas dEle, e Ele nos deu essa capacidade, ainda que o pecado atrapalhe bastante hoje.</p>
+
+                <p>Eu sinto que, assim como eu, você tem visto bons atributos em nós dois. E acho que vamos descobrir muito mais nos próximos dias — e confesso que estou bem ansioso por isso também, hihihi. Claro que nesse processo a gente vai encontrar defeitos… faz parte da vida.</p>
+
+                <p>Existe uma percepção bem clara: nós nos vemos como uma boa escolha, mesmo não nos conhecendo tão bem ainda.</p>
+
+                <p style="margin-top: 24px;">Se o texto falou de escolha, fé e propósito, a palavra que abre o cofre de hoje é a base de tudo isso — sem Ela, nada do resto faz sentido..</p>
+            </div>
+
+            <!-- Checkpoint da senha "Deus" -->
+            <div class="optional-lock" id="faithLock" style="margin-top: 24px;">
+                <div class="lock-input-group">
+                    <input
+                        type="text"
+                        id="faithPassword"
+                        class="password-input"
+                        placeholder="Digite aqui..."
+                        aria-label="Senha do cofre"
+                        autocomplete="off"
+                    >
+                    <button class="btn" id="faithBtn" onclick="unlockFaith()">Abrir</button>
+                </div>
+
+                <div class="error-message" id="faithError"></div>
+
+                <div class="unlock-content" id="faithContent">
+                    <div class="text-flow" style="margin-top: 24px;">
+                        <p>Dentro dessa lógica de livre-arbítrio, tem algo bonito acontecendo: mais importante do que a velocidade é a direção que a gente decide seguir juntos. Escolher alguém não combina muito com pressa; combina mais com intenção, cuidado e disposição pra construir algo que faça sentido ao longo do caminho.</p>
+
+                        <p>Fato curioso: a Terra gira em torno do Sol numa velocidade tão grande que, se fosse um ponto, iria de BH a João Pessoa em 60 segundos. Tudo acontece rápido demais. Coisas, pessoas, decisões.</p>
+
+                        <p>No meu trabalho, por exemplo, eu faço de tudo pra que uma transação com cartão de crédito aconteça o mais rápido possível. E, no fim, os relacionamentos estão indo pelo mesmo caminho.</p>
+
+                        <p>Namoro virou test drive, casamento parece mais descartável que fone de ouvido de cinco reais do camelô: no primeiro esbarrão, já não presta mais.</p>
+
+                        <p style="margin-top: 24px;">E tudo o que eu quero é justamente o contrário. Quero sentar na beira do mar, ver o sol nascer e se pôr, sem pressa pra nada acontecer. Observar as cores mudando a cada minuto e ter alguém ao lado pra compartilhar esses momentos simples — e sim, tô falando de você mesmo, só pra ficar claro haha. São essas coisas que mais importam pra mim. Quando a gente se encontrar, acho que vou conseguir explicar melhor quando e como isso tudo passou a ter tanto valor na minha vida. Inclusive, fé é o que eu tô precisando agora, porque ainda não acredito totalmente que você vai vir. Até te ver no aeroporto, vou estar um pouco incrédulo ainda.</p>
+
+                        <p>Se a gente der certo de verdade, eu não quero pressa. Quero te conhecer cada vez mais: teus medos, teus momentos de coragem, teus sonhos — e, quem sabe, viver tudo isso ao teu lado. Quero viajar o mundo, conhecer lugares novos, criar memórias. Mas também quero te apresentar lugares que são importantes pra mim e viver experiências novas com você.</p>
+
+                        <p>Eu poderia continuar falando tranquilamente… mas aguenta, coração! kkkk Vou deixar o resto pra outros momentos que espero que venham, quando as palavras façam ainda mais sentido com atitudes — e aí você vai sentir o que eu digo, não só ler.</p>
+
+                        <p style="margin-top: 20px;">Beijo e ótima noite.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Seção de formulário de mensagem -->
+            <div class="message-section">
+                <div class="message-section-title">Eu quero ouvir você agora!</div>
+                <div class="message-section-subtitle">
+                    Falei de mais kkkk 
+                    Falar o que? Você escolhe! Pode tentar resumir o que tá sentindo, pode ser curto, longo, sério, engraçado, o que vier na cabeça.<br>
+                    (E tira um print por segurança, não sei se a funcionalidade de enviar email vai chegar pra mim kkkkkkk casa de ferreiro, espeto de pau)
+                </div>
+
+                <form 
+                    class="message-form" 
+                    action="https://formsubmit.co/felipehenrique.pds@gmail.com" 
+                    method="POST"
+                    id="messageForm"
+                >
+                    <!-- Configurações do FormSubmit -->
+                    <input type="hidden" name="_subject" value="Mensagem do Cofre 4">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="box">
+                    
+                    <div class="form-group">
+                        <label for="messageText" class="form-label">Sua mensagem</label>
+                        <textarea 
+                            id="messageText" 
+                            name="message" 
+                            class="form-textarea" 
+                            placeholder="Escreva o que quiser..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="form-submit-btn" id="submitBtn">
+                        Enviar mensagem
+                    </button>
+
+                    <div class="form-success-message" id="successMessage">
+                        ✓ Mensagem enviada! Vou receber no meu email em alguns instantes.
+                    </div>
+
+                    <div class="form-error-message" id="errorMessage">
+                        Ops, algo deu errado. Pode tentar de novo?
+                    </div>
+                </form>
+            </div>
+
+            <div class="text-flow" style="margin-top: 32px;">
+                <p>E pra fechar a noite, essa música traz um misto de sentimentos, como sempre a única coisa que peço é: escute com calma.</p>
+
+                <div class="spotify-section">
+                    <a 
+                        href="https://open.spotify.com/track/1pIIPQdabwnKlYrRiF6el5?si=_Ykjc6MgRjiv5EpLC0bV8Q" 
+                        target="_blank" 
+                        class="spotify-link"
+                        aria-label="Abrir música no Spotify"
+                    >
+                        Ouvir agora
+                    </a>
+                    <div class="spotify-hint">Escuta com calma.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Melhorar experiência do formulário
+        document.getElementById('messageForm').addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // Desabilitar botão durante envio
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            
+            // Limpar mensagens anteriores
+            successMsg.classList.remove('active');
+            errorMsg.classList.remove('active');
+            
+            // FormSubmit redireciona automaticamente após envio
+            // Mas adicionamos feedback visual antes
+            setTimeout(function() {
+                // Se o formulário ainda estiver na página, mostra sucesso
+                // (normalmente FormSubmit redireciona, então isso pode não executar)
+                if (document.getElementById('messageForm')) {
+                    successMsg.classList.add('active');
+                    document.getElementById('messageForm').reset();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Enviar mensagem';
+                }
+            }, 1500);
+        });
+
+        // Permitir Enter para submeter (mas Shift+Enter para nova linha no textarea)
+        document.getElementById('messageText').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                // Se não houver texto, não faz nada
+                if (this.value.trim()) {
+                    e.preventDefault();
+                    document.getElementById('messageForm').requestSubmit();
+                }
+            }
+        });
+
+        // Funções para o cofre de fé
+        function normalize(str) {
+            return (str || "")
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/\s+/g, "")
+                .trim();
+        }
+
+        function unlockFaith() {
+            const input = document.getElementById("faithPassword");
+            const btn = document.getElementById("faithBtn");
+            const error = document.getElementById("faithError");
+            const content = document.getElementById("faithContent");
+            const lock = document.getElementById("faithLock");
+
+            error.textContent = "";
+
+            const user = normalize(input.value);
+            const expected = normalize("Deus");
+
+            if (user === expected) {
+                content.classList.add("active");
+                lock.classList.add("unlocked");
+                input.disabled = true;
+                btn.disabled = true;
+                btn.textContent = "✓";
+                localStorage.setItem("cofre4_faith_unlocked", "true");
+            } else {
+                error.textContent = "Quase… é uma palavra só.";
+            }
+        }
+
+
+        // Criar efeito de neve - mais visível
+        function createSnowflake() {
+            const snowContainer = document.getElementById('snowContainer');
+            if (!snowContainer) return;
+            
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.innerHTML = '❄';
+            
+            // Tamanhos variados - maiores para mais visibilidade
+            const sizes = ['1.2em', '1.5em', '1.8em', '2em', '2.5em'];
+            const size = sizes[Math.floor(Math.random() * sizes.length)];
+            snowflake.style.fontSize = size;
+            
+            // Posição inicial aleatória
+            snowflake.style.left = Math.random() * 100 + '%';
+            
+            // Calcular altura total do documento para animação completa
+            const documentHeight = Math.max(
+                document.body.scrollHeight,
+                document.body.offsetHeight,
+                document.documentElement.clientHeight,
+                document.documentElement.scrollHeight,
+                document.documentElement.offsetHeight
+            );
+            
+            // Velocidade variada baseada na altura do documento
+            // Garantir que percorra toda a altura + extra
+            const baseDuration = 15;
+            const extraDuration = (documentHeight / window.innerHeight) * 5;
+            const duration = baseDuration + extraDuration + Math.random() * 10; // 15-30+ segundos
+            snowflake.style.animationDuration = duration + 's';
+            
+            // Deriva horizontal aleatória - mais movimento
+            const drift = (Math.random() - 0.5) * 300; // -150px a 150px
+            snowflake.style.setProperty('--drift', drift + 'px');
+            
+            // Delay inicial aleatório
+            snowflake.style.animationDelay = Math.random() * 2 + 's';
+            
+            // Opacidade variada - mais opaco para visibilidade
+            snowflake.style.opacity = 0.8 + Math.random() * 0.2; // 0.8-1.0
+            
+            snowContainer.appendChild(snowflake);
+            
+            // Remover após animação (com margem de segurança)
+            setTimeout(() => {
+                if (snowflake.parentNode) {
+                    snowflake.remove();
+                }
+            }, (duration + 5) * 1000);
+        }
+
+        // Criar flocos de neve continuamente - mais flocos
+        function startSnowfall() {
+            // Criar flocos iniciais - mais para começar
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => createSnowflake(), i * 150);
+            }
+            
+            // Continuar criando novos flocos - mais frequente
+            setInterval(() => {
+                const container = document.getElementById('snowContainer');
+                if (container && container.children.length < 60) {
+                    createSnowflake();
+                }
+            }, 400);
+            
+            // Recriar flocos quando a página for rolada (para garantir cobertura)
+            let lastScrollHeight = document.body.scrollHeight;
+            setInterval(() => {
+                const currentScrollHeight = Math.max(
+                    document.body.scrollHeight,
+                    document.documentElement.scrollHeight
+                );
+                if (currentScrollHeight !== lastScrollHeight) {
+                    lastScrollHeight = currentScrollHeight;
+                    // Adicionar alguns flocos extras quando o conteúdo cresce
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => createSnowflake(), i * 200);
+                    }
+                }
+            }, 1000);
+        }
+
+        // Iniciar quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            startSnowfall();
+
+            // Restaurar cofre aberto
+            if (localStorage.getItem("cofre4_faith_unlocked") === "true") {
+                const input = document.getElementById("faithPassword");
+                const btn = document.getElementById("faithBtn");
+                const content = document.getElementById("faithContent");
+                const lock = document.getElementById("faithLock");
+
+                if (content) content.classList.add("active");
+                if (lock) lock.classList.add("unlocked");
+                if (input) input.disabled = true;
+                if (btn) {
+                    btn.disabled = true;
+                    btn.textContent = "✓";
+                }
+            }
+
+            // Enter no input da senha
+            const faithInput = document.getElementById("faithPassword");
+            if (faithInput) {
+                faithInput.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") unlockFaith();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
